@@ -14,6 +14,6 @@ Added a decorator @app to initiate a get end point of type root
 An async method greetingMessage is defined to return a message
 
 ## Local data  in list
-Created a list of cricket players as dictonaries which are wrapped in cricketTeam list
-Created an end point to fetch & display the team
-Created an end point to fetch & display a player details with the help of player id
+* Created a list of cricket players as dictonaries which are wrapped in cricketTeam list
+* Created an end point to fetch & display the team
+* Created an end point to fetch & display a player details with the help of player id
