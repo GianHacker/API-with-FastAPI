@@ -4,6 +4,9 @@ from typing import Optional
 from urllib import response
 from fastapi import FastAPI, Response, status, HTTPException
 from pydantic import BaseModel
+import psycopg2
+from psycopg2.extras import RealDictCursor
+import time
 
 app = FastAPI()
 
@@ -12,6 +15,19 @@ class Player(BaseModel):
     name : str
     Class: str
     #section: str(Optional) = None
+
+while True:
+    try:
+        conn = psycopg2.connect(host='localhost', database='fastapi',user='root', password='D0n@ev!l', cursor_factory=RealDictCursor)
+        cursor = conn.cursor()
+        print('Database Connection is Successful')
+        break
+    except Exception as error:
+        print('Connection to database failed')
+        print('Error:', error)
+        time.sleep(2)
+
+        
 
 cricketTeam = [{'id': 1, 'name': 'Rajiv','Class':'X'},
                {'id': 2, 'name':'Rudra','Class':'XII'},
@@ -26,6 +42,13 @@ def find_player_index(id):
     for i, p in enumerate(cricketTeam):
         if p['id'] == id:
             return i
+
+@app.get("/products")
+async def get_Products():
+    cursor.execute('''SELECT * FROM products''')
+    products = cursor.fetchall()
+    #print(products)
+    return{"Products": products}
 
 @app.get("/")
 async def greetingMessage():
